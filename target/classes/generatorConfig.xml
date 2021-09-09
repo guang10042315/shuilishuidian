@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!-- refer to: http://mybatis.org/generator/quickstart.html -->
+<generatorConfiguration>
+    <!--引入数据库配置文件以解耦-->
+    <properties resource="jdbc.properties"/>
+
+    <context id="Mysql" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true" />
+            <!-- 是否去除所有自动生成的文件的时间戳，默认为false -->
+            <!-- <property name="suppressDate" value="false"/> -->
+        </commentGenerator>
+
+        <!-- 一、配置数据库连接 -->
+        <jdbcConnection driverClass="${jdbc.driverClassName}"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.username}"
+                        password="${jdbc.password}">
+        </jdbcConnection>
+        <!--<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/evaluation_system"
+                        userId="root"
+                        password="123456">
+        </jdbcConnection>-->
+        <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和
+             NUMERIC 类型解析为java.math.BigDecimal -->
+        <!--        <javaTypeResolver>
+                    <property name="forceBigDecimals" value="false" />
+                </javaTypeResolver>-->
+
+        <!-- 二、配置生成的model和mapper等名称和路径 -->
+        <!--（1）Generate Entity Classes（java bean）-->
+        <!-- targetPackage:包名称(自定义)  targetProject：项目路径(自定义)   -->
+        <javaModelGenerator targetPackage="com.miaoshaproject.dataobject"
+                            targetProject="src\main\java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="true" />
+            <!-- 从数据库返回的值被清理前后的空格  -->
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!-- （2）Generate mapper corresponding XML file, optionally generate -->
+        <!--指定sql映射文件生成的位置 -->
+        <sqlMapGenerator targetPackage="mapping"
+                         targetProject="src\main\resources">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+        <!-- （3）Generate mapper -->
+        <!-- 指定dao接口生成的位置，mapper接口 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.miaoshaproject.dao"
+                             targetProject="src\main\java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+        <!--三、配置生成表策略-->
+        <!-- table指定每个表的生成策略 -->
+        <!--<table tableName="%"/>-->
+        <!--<table tableName="t_imagepath" domainObjectName="ImagePath"></table>-->
+        <!--<table tableName="t_wx_msg_out" domainObjectName="WxMsgOut"></table>-->
+        <!--<table tableName="t_user" domainObjectName="User"></table>-->
+        <!--<table tableName="t_version" domainObjectName="Version"></table>-->
+        <!--<table tableName="" domainObjectName=""></table>-->
+        <table tableName="user_info" domainObjectName="UserDO" enableCountByExample="false" enableDeleteByExample="false"
+        enableSelectByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="user_password" domainObjectName="UserPasswordDO" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false"></table>
+    </context>
+</generatorConfiguration>
